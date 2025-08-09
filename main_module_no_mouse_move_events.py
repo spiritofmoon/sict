@@ -1,7 +1,3 @@
-
-# 此脚本使用鼠标侧键控制录制。
-# CSV事件日志的格式已恢复为 v7_0_3.py 的通用六列格式。
-
 import dxcam
 import time
 import av
@@ -22,7 +18,7 @@ REGION = (0, 0, 1920, 1080)
 
 
 # ==============================================================================
-# 进程 1: 屏幕捕获 (生产者) - 无改动
+# 进程 1: 屏幕捕获 (生产者)
 # ==============================================================================
 def capture_process(frame_queue: mp.Queue, region: tuple, start_event: mp.Event, stop_event: mp.Event):
     """在一个独立的进程中运行，等待开始信号，然后捕获屏幕直到停止信号发出。"""
@@ -68,7 +64,7 @@ def capture_process(frame_queue: mp.Queue, region: tuple, start_event: mp.Event,
 
 
 # ==============================================================================
-# 进程 2: 视频编码 (消费者) - 无改动
+# 进程 2: 视频编码 (消费者)
 # ==============================================================================
 def encode_process(frame_queue: mp.Queue, output_path: str, sync_time_path: str, width: int, height: int):
     """在另一个独立的进程中运行，负责从队列中取出帧并编码成视频。"""
@@ -117,12 +113,11 @@ def encode_process(frame_queue: mp.Queue, output_path: str, sync_time_path: str,
 
 
 # ==============================================================================
-# 进程 3: 输入事件监听 (总指挥) - **此部分已更新**
+# 进程 3: 输入事件监听
 # ==============================================================================
 def input_listener_process(output_csv_path: str, start_event: mp.Event, stop_event: mp.Event):
     """
     在第三个进程中运行，监听所有输入事件并写入CSV。
-    CSV格式已恢复为 v7_0_3.py 的通用六列格式。
     """
     print("[输入进程] --- 输入监听已启动 ---")
     print("[输入进程] 请按 鼠标侧键2 (前进键) 开始录制...")
@@ -134,7 +129,7 @@ def input_listener_process(output_csv_path: str, start_event: mp.Event, stop_eve
     try:
         with open(output_csv_path, 'w', newline='', encoding='utf-8') as f:
             writer = csv.writer(f)
-            # 写入与 v7_0_3.py 完全相同的表头
+            # 写入与 main_module_all_events.py 完全相同的表头
             writer.writerow(['timestamp_ns', 'event_type', 'param1', 'param2', 'param3', 'param4'])
 
             # --- 定义事件处理函数 ---
@@ -193,7 +188,7 @@ def input_listener_process(output_csv_path: str, start_event: mp.Event, stop_eve
 
 
 # ==============================================================================
-# 主进程: 负责启动、协调和等待所有子进程 - 无改动
+# 主进程: 负责启动、协调和等待所有子进程
 # ==============================================================================
 if __name__ == "__main__":
     mp.freeze_support()

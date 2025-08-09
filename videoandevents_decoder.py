@@ -40,7 +40,6 @@ def read_video_timestamps(video_path: str) -> List[int]:
 def read_input_events(csv_path: str) -> List[list]:
     """
     读取输入事件CSV文件，返回事件列表。
-    时间戳已转换为整数纳秒。
     """
     print(f"正在从 '{csv_path}' 读取输入事件...")
     events = []
@@ -63,9 +62,7 @@ def read_input_events(csv_path: str) -> List[list]:
         sys.exit(1)
 
 
-# ==============================================================================
-# === 核心修改部分：关联函数现在接收视频的绝对开始时间 ===
-# ==============================================================================
+
 def correlate_events_to_frames(frame_timestamps_relative: List[int], events_absolute: List[list], video_start_ns: int) -> List[dict]:
     """
     将事件列表关联到每个视频帧的时间间隔内。
