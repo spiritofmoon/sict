@@ -1,0 +1,6 @@
+input_module_all_inf.cpp
+setup.py
+input_module.egg-info/PKG-INFO
+input_module.egg-info/SOURCES.txt
+input_module.egg-info/dependency_links.txt
+input_module.egg-info/top_level.txt
